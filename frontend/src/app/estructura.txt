@@ -1,0 +1,31 @@
+Listado de rutas de carpetas para el volumen Nuevo vol
+El número de serie del volumen es 32F3-25CB
+E:.
++---app
++---components
+¦   +---cards
+¦   ¦   +---card-detail
+¦   ¦   +---card-list
+¦   ¦   +---deck-detail
+¦   ¦   +---my-decks
+¦   +---events
+¦   ¦   +---event-detail
+¦   ¦   +---event-form
+¦   ¦   +---event-list
+¦   ¦   +---manage-events
+¦   ¦   +---player-events
+¦   ¦   +---tournament-manager
+¦   +---home
+¦   +---login
+¦   ¦   +---login
+¦   +---register
+¦   ¦   +---register
+¦   +---shared
+¦   ¦   +---footer
+¦   ¦   +---header
+¦   +---user-profile
++---constants
+¦   +---types
++---guards
++---models
++---services

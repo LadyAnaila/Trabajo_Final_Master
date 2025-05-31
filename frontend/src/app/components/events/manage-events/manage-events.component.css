@@ -1,0 +1,35 @@
+/* 
+PARA MOSTRAR EL MAPA 
+
+.map-container {
+  height: 300px;
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  position: relative;
+  overflow: hidden;
+}
+
+#map {
+  position: relative;
+  z-index: 0;
+} */
+
+mat-card-actions button {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+mat-card-actions button:last-child {
+  margin-right: 0;
+}
+
+.separated-btn {
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+
+.event-card {
+  margin-bottom: 1.5rem;
+}

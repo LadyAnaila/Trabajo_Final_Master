@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
+
+}
+
+
+
+
+.event-card {
+  margin-bottom: 1.5rem;
+}
+
+
+.event-actions-nav {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.event-actions-nav button {
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: none;
+}
+
+.event-actions-nav button:not(:last-child) {
+  border-right: 1.5px solid #2b32b4;
+}

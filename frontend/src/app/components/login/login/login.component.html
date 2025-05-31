@@ -1,0 +1,40 @@
+<div class="login-form">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Iniciar Sesión</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-field">
+          <label for="username">Usuario</label>
+          <mat-form-field appearance="fill" class="full-width">
+            <input matInput id="username" type="text" formControlName="username" required>
+            <mat-error *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
+              El usuario es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-field">
+          <label for="password">Contraseña</label>
+          <mat-form-field appearance="fill" class="full-width">
+            <input matInput id="password" type="password" formControlName="password" required>
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+              La contraseña es obligatoria.
+            </mat-error>
+          </mat-form-field>
+        </div>        
+        <div *ngIf="errorMessage" class="error-message">
+          <mat-icon color="warn">error</mat-icon>
+          <span>{{ errorMessage }}</span>
+        </div>
+        <div *ngIf="successMessage" class="success-message">
+          <mat-icon color="primary">check_circle</mat-icon>
+          <span>{{ successMessage }}</span>
+        </div>
+        <mat-card-actions class="event-actions-nav">
+          <button mat-stroked-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+        </mat-card-actions>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

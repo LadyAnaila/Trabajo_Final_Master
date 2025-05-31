@@ -1,0 +1,31 @@
+header {
+    width: 100%;
+  }
+  
+  .mat-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .app-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-links li {
+    display: inline;
+  }
+  
+  .spacer {
+    flex: 1;
+  }

@@ -1,0 +1,143 @@
+<div>
+  <form (ngSubmit)="saveDeck()" #deckForm="ngForm" class="deck-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre del mazo</mat-label>
+      <input matInput [(ngModel)]="deckName" name="deckName" required>
+    </mat-form-field>
+    <span class="card-counter">
+      {{ getTotalCards() }} cartas
+    </span>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!deckName || selectedCards.length === 0">
+      Guardar mazo
+    </button>
+  </form>
+
+  <!-- Lista de cartas seleccionadas -->
+  <div *ngIf="selectedCards.length > 0" class="selected-cards">
+    <h3>Cartas en el mazo</h3>
+    <div *ngFor="let sel of selectedCards" class="selected-card">
+      <span>{{ getCardName(sel.card_code) }}</span>
+      <button mat-mini-button color="primary" (click)="decrementCard(sel)">−</button>
+      <span class="quantity">{{ sel.quantity }}</span>
+      <button mat-mini-button color="primary" (click)="incrementCard(sel)">+</button>
+    </div>
+  </div>
+
+  <!-- Botones para alternar vista -->
+  <div class="view-toggle">
+    <button mat-icon-button [color]="viewMode === 'cards' ? 'primary' : ''" (click)="setViewMode('cards')"
+      aria-label="Vista tarjetas">
+      <mat-icon>grid_view</mat-icon>
+    </button>
+    <button mat-icon-button [color]="viewMode === 'list' ? 'primary' : ''" (click)="setViewMode('list')"
+      aria-label="Vista lista">
+      <mat-icon>view_list</mat-icon>
+    </button>
+  </div>
+
+
+  <!-- Filtros -->
+  <form class="mb-3" (ngSubmit)="applyFilters()">
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo</mat-label>
+      <mat-select [(ngModel)]="filters.type_code" name="type_code">
+        <mat-option value="">Todos</mat-option>
+        <mat-option *ngFor="let type of cardTypes" [value]="type.code">
+          {{ type.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Facción</mat-label>
+      <mat-select [(ngModel)]="filters.faction_code" name="faction_code">
+        <mat-option value="">Todas</mat-option>
+        <mat-option *ngFor="let faction of factions" [value]="faction.code">
+          {{ faction.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="filters.name" name="name" placeholder="Nombre de la carta">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Filtrar</button>
+    <button mat-button type="button" (click)="clearFilters()">Limpiar</button>
+  </form>
+
+
+  <!----------->
+  <!--VISTAS -->
+  <!----------->
+
+  <!-- Tarjetas -->
+  <div class="card-list" *ngIf="viewMode === 'cards'">
+    <mat-card *ngFor="let card of pagedCards" class="card-item"
+      [ngClass]="{'investigator': card.type_code === 'investigator'}">
+      <img mat-card-image [src]="'https://arkhamdb.com/bundles/cards/' + card.code + '.png'" [alt]="card.name" />
+      <mat-card-title>{{ card.name }}</mat-card-title>
+      <mat-card-content>
+        <div>Tipo: {{ card.type_code }}</div>
+        <div>Facción: {{ card.faction_code }}</div>
+        <div class="card-description">
+          <strong>Descripción:</strong>
+          <div>{{ card.text || 'Sin descripción.' }}</div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="addToDeck(card)">
+          Añadir
+        </button>
+        <span *ngIf="isSelected(card)" class="quantity-badge">
+          ×{{ getCardQuantity(card.code) }}
+        </span>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+
+  <!--Lista -->
+  <table *ngIf="viewMode === 'list'" class="card-list-table">
+    <tr>
+      <th>Nombre</th>
+      <th>Tipo</th>
+      <th>Facción</th>
+      <th>Acciones</th>
+    </tr>
+    <tr *ngFor="let card of pagedCards" [ngClass]="{'investigator': card.type_code === 'investigator'}">
+      <td>
+        <img 
+          [src]="'https://arkhamdb.com/bundles/cards/' + card.code + '.png'" 
+          [alt]="card.name"
+          class="card-thumb"
+        />
+        {{ card.name }}
+        <button mat-icon-button (click)="expandedRows[card.code] = !expandedRows[card.code]"
+          aria-label="Ver descripción">
+          <mat-icon>{{ expandedRows[card.code] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+        <div *ngIf="expandedRows[card.code]" class="card-description">
+          <strong>Descripción:</strong>
+          <div>{{ card.text || 'Sin descripción.' }}</div>
+        </div>
+      </td>
+
+    <td>{{ card.type_code }}</td>
+      <td>{{ card.faction_code }}</td>
+      <td>
+        <button mat-raised-button color="primary" (click)="addToDeck(card)">
+          Añadir
+        </button>        
+        <span *ngIf="isSelected(card)" class="quantity-badge">
+          ×{{ getCardQuantity(card.code) }}
+        </span>
+      </td>
+    </tr>
+  </table>
+
+
+  <!-- Paginación -->
+  <mat-paginator [length]="cards.length" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+
+</div>

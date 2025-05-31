@@ -1,0 +1,27 @@
+<h2>Mis mazos</h2>
+<button mat-raised-button color="primary" [routerLink]="['/cards/deckbuilder']">
+  Crear mazo
+</button>
+<div *ngIf="decks.length === 0">No tienes mazos guardados.</div>
+<div class="deck-list">
+  <mat-card *ngFor="let deck of decks" class="deck-card">
+    <mat-card-title>{{ deck.name }}</mat-card-title>
+
+
+<div *ngIf="deck.cardsPreview && deck.cardsPreview.length > 0" class="card-preview">
+  <img
+    [src]="'https://arkhamdb.com/bundles/cards/' + deck.cardsPreview[0].card_code + '.png'"
+    [alt]="deck.cardsPreview[0].card_code"
+    width="80"
+    height="auto"
+  />
+</div>
+
+
+    <mat-card-actions class="deck-actions">
+      <button mat-button color="primary" [routerLink]="['/cards/decks', deck.id]">Ver cartas</button>
+      <span class="divider">|</span>
+      <button mat-button color="warn" (click)="deleteDeck(deck.id)">Eliminar mazo</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

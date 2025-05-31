@@ -1,0 +1,40 @@
+<div class="manage-events">
+
+  <!-- Mostrar solo si el rol es "store" -->
+  <div *ngIf="role === 'store'">
+    <h2>Eventos creados</h2>
+
+    <!-- Botón para crear evento -->
+    <div class="create-event-button" *ngIf="role === 'store'">
+      <button mat-raised-button color="primary" class="separated-btn" (click)="navigateToCreate()">Crear evento</button>
+    </div>
+
+    <!-- EVENTOS -->
+    <div *ngIf="isLoadingCreated">Cargando eventos creados...</div>
+    <div *ngIf="!isLoadingCreated && createdEvents.length > 0; else noCreatedEvents">
+      <div class="event-list">
+        <mat-card *ngFor="let event of createdEvents" class="event-card">
+          <mat-card-header>
+            <mat-card-title>{{ event.name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ event.date | date:'dd/MM/yy' }}</p>
+            <p><strong>Ubicación:</strong> {{ event.address || 'No especificada' }}</p>
+          </mat-card-content>
+          <mat-card-actions class="event-actions-nav">
+            <button mat-stroked-button color="primary" *ngIf="event.address" (click)="viewOnMap(event.address)">Ver en
+              mapa</button>
+            <button mat-stroked-button color="accent" (click)="navigateToEdit(event.id)">Editar</button>
+            <button mat-stroked-button color="warn" (click)="deleteEvent(event.id)">Eliminar</button>
+            <button mat-stroked-button color="primary" (click)="viewDetails(event.id)">Ver detalles</button>
+          </mat-card-actions>
+
+        </mat-card>
+      </div>
+    </div>
+    <ng-template #noCreatedEvents>
+      <p>No has creado ningún evento.</p>
+    </ng-template>
+  </div>
+
+</div>

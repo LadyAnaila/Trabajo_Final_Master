@@ -1,0 +1,32 @@
+export interface Card {
+    code: string;
+    name: string;
+    type_code: string;
+    subtype_code?: string;
+    faction_code: string;
+    faction2_code?: string;
+    position: number;
+    exceptional?: boolean;
+    myriad?: boolean;
+    permanent?: boolean;
+    double_sided?: boolean;
+    back_text?: string;
+    back_flavor?: string;
+    flavor?: string;
+    text?: string;
+    quantity: number;
+    skill_willpower?: number;
+    skill_intellect?: number;
+    skill_combat?: number;
+    skill_agility?: number;
+    health?: number;
+    sanity?: number;
+    deck_limit?: number;
+    traits?: string;
+    restrictions?: any;
+    illustrator?: string;
+    is_unique?: boolean;
+    exile?: boolean;
+    bonded_name?: string;
+    bonded_count?: number;
+  }

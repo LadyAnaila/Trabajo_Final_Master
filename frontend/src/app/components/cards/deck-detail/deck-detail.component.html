@@ -1,0 +1,23 @@
+<button mat-raised-button color="accent" routerLink="/cards/my-decks" type="button">
+ Volver a mis mazos
+</button>
+
+
+<h2>{{ deck?.name }}</h2>
+<div *ngIf="loading">Cargando...</div>
+<div *ngIf="!loading && deckCards.length === 0">Este mazo no tiene cartas.</div>
+<div class="card-list">
+  <mat-card
+    *ngFor="let card of deckCards"
+    [class.investigator]="card.type_code === 'investigator'">
+    <img mat-card-image [src]="'https://arkhamdb.com/bundles/cards/' + card.code + '.png'" [alt]="card.name" />
+    <mat-card-title>{{ card.name }}</mat-card-title>
+    <mat-card-content>
+      Tipo: {{ card.type_code }}<br>
+      Facción: {{ card.faction_code }}<br>
+      Cantidad: {{ card.quantity }}
+    </mat-card-content>
+  </mat-card>
+  <button mat-raised-button color="primary" (click)="editDeck()">Modificar mazo</button>
+  <button mat-raised-button color="warn" (click)="deleteDeck()">Eliminar mazo</button>
+</div>

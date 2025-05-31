@@ -1,0 +1,43 @@
+mat-card {
+  margin-bottom: 2rem;
+  padding: 1.2rem 1rem;
+}
+
+button[mat-raised-button] {
+  margin-bottom: 1.5rem;
+}
+
+.row {
+  margin-bottom: 1.5rem;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.mt-4 {
+  margin-top: 2rem !important;
+}
+
+/* Emparejamientos */
+.chips-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.chips-row mat-chip {
+  min-width: 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vs-text {
+  flex: 1 1 0;
+  font-weight: bold;
+  text-align: center;
+  color: #607d8b;
+  min-width: 2.5rem;
+}

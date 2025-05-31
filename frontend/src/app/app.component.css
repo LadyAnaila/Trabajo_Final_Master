@@ -1,0 +1,50 @@
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  #app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+
+main, .main-container, .app-container {
+    flex: 1 0 auto;
+  width: 95%;
+  min-width: 0;
+  max-width: 100%;
+  margin: 1rem auto 0 auto;
+  padding: 0.75rem;
+  background: #fff;
+}
+
+@media (min-width: 767px) {
+  main, .main-container, .app-container {
+    width: 80%;
+    max-width: 75rem; 
+    margin: 2rem auto 0 auto;
+    padding: 1.5rem;
+  }
+}
+
+
+mat-card-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+mat-card-actions button {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  /* Elimina border-radius: 0 si quieres los bordes redondeados por defecto */
+}
+
+mat-card-actions button:last-child {
+  margin-right: 0;
+}

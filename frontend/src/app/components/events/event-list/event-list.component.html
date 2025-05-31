@@ -1,0 +1,29 @@
+<div *ngIf="isLoading" class="spinner">Cargando...</div>
+<table *ngIf="!isLoading" class="event-table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Fecha</th>
+      <th>Ubicación</th>
+      <th>Juego</th>
+      <th>Formato</th>
+      <th>Tipo</th>
+      <th>Creador</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let event of events">
+      <td>{{ event.name }}</td>
+      <td>{{ event.date }}</td>
+      <td>{{ event.address || 'No especificada' }}</td>
+      <td>{{ event.game_name }}</td>
+      <td>{{ event.format }}</td>
+      <td>{{ event.event_type }}</td>
+      <td>{{ event.created_by }}</td>
+      <td>
+        <button *ngIf="event.id !== undefined" (click)="viewEvent(event.id!)">Ver</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

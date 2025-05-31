@@ -1,0 +1,10 @@
+<div *ngIf="card">
+  <h2>{{ card.name }}</h2>
+  <p>{{ card.text }}</p>
+  <p><strong>Type:</strong> {{ card.type_code }}</p>
+  <p><strong>Faction:</strong> {{ card.faction_code }}</p>
+
+</div>
+<div *ngIf="!card">
+  <p>Loading card details...</p>
+</div>

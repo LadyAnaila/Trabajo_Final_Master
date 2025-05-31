@@ -1,0 +1,27 @@
+.deck-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.deck-card {
+  width: 18rem;
+}
+
+.deck-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.divider {
+  color: #888;
+  font-weight: bold;
+  padding: 0 8px;
+  user-select: none;
+}
+
+.card-preview {
+  margin: 8px 0;
+  display: flex;
+  justify-content: center;
+}

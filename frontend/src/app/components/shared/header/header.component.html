@@ -1,0 +1,38 @@
+<header>
+  <mat-toolbar color="primary">
+    <h1 class="app-title">Tabletop Manager </h1>
+    <span class="spacer"></span>
+    <nav>
+      <ul class="nav-links">
+        <li> <a mat-button routerLink="/">Inicio</a> </li>
+
+        <!-- ANTES DEL LOGIN -->
+        <li *ngIf="!userService.isLoggedIn()">
+          <a mat-button routerLink="/login">Entrar</a>
+        </li>
+        <li *ngIf="!userService.isLoggedIn()">
+          <a mat-button routerLink="/register">Registro</a>
+        </li>
+
+        <!-- DESPUÉS DEL LOGIN -->
+        <li *ngIf="userService.isLoggedIn()">
+          <a mat-button routerLink="/profile">Perfil</a>
+        </li>
+
+<!-- Mostrar "Gestionar eventos" si el rol es "store" -->
+<li *ngIf="userService.isLoggedIn() && userService.getRole() === 'store'">
+  <a mat-button routerLink="/events/manage-events">Gestionar eventos</a>
+</li>
+
+<!-- Mostrar "Mis eventos" si el rol es "player" -->
+<li *ngIf="userService.isLoggedIn()">
+  <a mat-button routerLink="/events/player-events">Mis eventos</a>
+</li>
+
+        <li *ngIf="userService.isLoggedIn()">
+          <a mat-button (click)="logout()">Logout</a>
+        </li>
+      </ul>
+    </nav>
+  </mat-toolbar>
+</header>

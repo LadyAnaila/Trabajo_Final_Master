@@ -1,0 +1,153 @@
+/* Vista tarjetas */
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: flex-start;
+}
+
+.card-item {
+  width: 16rem;
+  min-height: 28rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card-item img {
+  width: 100%;
+  height: 14rem;
+  object-fit: contain;
+  border-radius: 8px 8px 0 0;
+}
+
+.card-description {
+  margin-top: 0.5rem;
+  font-size: 0.95em;
+}
+
+/* Cartas de investigador (horizontales) */
+mat-card.investigator {
+  width: 20rem;
+}
+
+mat-card.investigator img {
+  height: 12rem;
+  object-fit: contain;
+}
+
+/* Lista de cartas seleccionadas */
+.selected-cards {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+.selected-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.selected-card .quantity {
+  font-weight: bold;
+  min-width: 2rem;
+  text-align: center;
+  display: inline-block;
+}
+
+/* Formulario del mazo */
+.deck-form {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.card-counter {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+  background: #e0e0e0;
+  padding: 0.4em 1em;
+  border-radius: 1em;
+}
+
+/* Badge de cantidad */
+.quantity-badge {
+  margin-left: 0.5rem;
+  font-weight: bold;
+  color: #1976d2;
+  background: #e3f2fd;
+  border-radius: 1em;
+  padding: 0.2em 0.8em;
+}
+
+/* Botones de cambio de vista */
+.view-toggle {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Tabla de vista lista */
+.card-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.card-list-table th, .card-list-table td {
+  border: 1px solid #e0e0e0;
+  padding: 0.7rem 0.5rem;
+  text-align: left;
+}
+.card-list-table th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+.card-description {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  font-size: 0.95em;
+}
+/* Miniatura estándar para cartas verticales */
+.card-thumb {
+  width: 32px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+}
+
+/* Miniatura horizontal para investigadores */
+tr.investigator .card-thumb {
+  width: 48px;
+  height: 32px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid #eee;
+}
+
+/* Tarjetas (vista tarjetas) */
+mat-expansion-panel {
+  background: #fffbe7;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+mat-expansion-panel-header {
+  align-items: center;
+}
+mat-panel-title img {
+  vertical-align: middle;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}

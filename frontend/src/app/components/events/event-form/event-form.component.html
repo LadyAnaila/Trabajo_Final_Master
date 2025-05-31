@@ -1,0 +1,129 @@
+<form (ngSubmit)="saveEvent()" #eventForm="ngForm" class="event-form">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre del evento</mat-label>
+    <input matInput [(ngModel)]="newEvent.name" name="name" required #name="ngModel" />
+    <mat-error *ngIf="name.invalid && name.touched">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput [(ngModel)]="newEvent.description" name="description" required #description="ngModel"></textarea>
+    <mat-error *ngIf="description.invalid && description.touched">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+  
+<mat-form-field appearance="fill">
+  <mat-label>Fecha</mat-label>
+  <input matInput [(ngModel)]="newEvent.date" name="date" type="date" required #date="ngModel" />
+  <mat-error *ngIf="date.invalid && date.touched">Este campo es obligatorio.</mat-error>
+</mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Hora de inicio</mat-label>
+    <input matInput [(ngModel)]="newEvent.start_time" name="start_time" type="time" required #startTime="ngModel" />
+    <mat-error *ngIf="startTime.invalid && startTime.touched">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Dirección</mat-label>
+    <input matInput [(ngModel)]="newEvent.address" name="address" required #address="ngModel" />
+    <mat-error *ngIf="address.invalid && address.touched">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+  <button mat-button *ngIf="newEvent.address" type="button" (click)="viewOnMap(newEvent.address)">Ver en mapa</button>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre del juego</mat-label>
+    <mat-select [(ngModel)]="newEvent.game_name" name="game_name" required #gameName="ngModel"
+      (selectionChange)="onGameChange()">
+      <mat-option *ngFor="let game of games" [value]="game">{{ game }}</mat-option>
+      <mat-option value="Otros">Otros</mat-option>
+    </mat-select>
+    <mat-error *ngIf="gameName.invalid && gameName.touched">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" *ngIf="isOtherGame">
+    <mat-label>Especifica el juego</mat-label>
+    <input matInput [(ngModel)]="newEvent.game_name" name="other_game" required #otherGame="ngModel" />
+    <mat-error *ngIf="otherGame.invalid && otherGame.touched">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Tipo de evento</mat-label>
+    <mat-select [(ngModel)]="newEvent.event_type" name="event_type" required #eventType="ngModel">
+      <mat-option *ngFor="let type of eventTypes" [value]="type">{{ type }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="eventType.invalid && eventType.touched">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+  <!-- Campo solo visible si el tipo de evento es COMPETITIVO -->
+  <mat-form-field appearance="fill" *ngIf="isCompetitiveEvent()">
+    <mat-label>Modelo de torneo</mat-label>
+    <mat-select [(ngModel)]="newEvent.tournament_type" name="tournament_type" required #tournamentType="ngModel">
+      <mat-option value="suizo">Suizo</mat-option>
+      <mat-option value="eliminacion">Eliminación</mat-option>
+      <mat-option value="liga">Liga</mat-option>
+    </mat-select>
+    <mat-error *ngIf="tournamentType.invalid && tournamentType.touched">Este campo es obligatorio.</mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>Precio de inscripción</mat-label>
+    <input matInput [(ngModel)]="newEvent.registration_fee" name="registration_fee" type="number" step="0.01"
+      #registrationFee="ngModel" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Límite de plazas</mat-label>
+    <input matInput [(ngModel)]="newEvent.max_participants" name="max_participants" type="number"
+      #maxParticipants="ngModel" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Visibilidad</mat-label>
+    <mat-select [(ngModel)]="newEvent.visibility" name="visibility" #visibility="ngModel">
+      <mat-option [value]="true">Público</mat-option>
+      <mat-option [value]="false">Privado</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>URL de la imagen</mat-label>
+    <input matInput [(ngModel)]="newEvent.image_url" name="image_url" type="url" #imageUrl="ngModel" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Duración (minutos)</mat-label>
+    <input matInput [(ngModel)]="newEvent.duration" name="duration" type="number" #duration="ngModel" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Información de contacto</mat-label>
+    <input matInput [(ngModel)]="newEvent.contact_info" name="contact_info" #contactInfo="ngModel" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Restricción de edad</mat-label>
+    <input matInput [(ngModel)]="newEvent.age_restriction" name="age_restriction" #ageRestriction="ngModel" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Idiomas</mat-label>
+    <input matInput [(ngModel)]="newEvent.languages" name="languages" #languages="ngModel" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Política de cancelación</mat-label>
+    <textarea matInput [(ngModel)]="newEvent.cancellation_policy" name="cancellation_policy"
+      #cancellationPolicy="ngModel"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Notas internas</mat-label>
+    <textarea matInput [(ngModel)]="newEvent.internal_notes" name="internal_notes" #internalNotes="ngModel"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="eventForm.invalid">
+    {{ isEditing ? 'Guardar Cambios' : 'Crear Evento' }}
+  </button>
+</form>

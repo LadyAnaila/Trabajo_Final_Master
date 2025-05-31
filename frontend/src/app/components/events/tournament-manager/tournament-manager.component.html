@@ -1,0 +1,207 @@
+<div class="container my-4">
+
+  <h2 class="text-center text-primary fw-bold mb-4">
+    {{ event?.name || 'Torneo' }}
+  </h2>
+
+  <div class="d-flex justify-content-center mb-4">
+    <mat-form-field appearance="outline" class="w-50">
+      <mat-label>Tipo de torneo</mat-label>
+      <mat-select [(value)]="tournamentType" [disabled]="tournamentFinished">
+        <mat-option value="elimination">Eliminatorio</mat-option>
+        <mat-option value="swiss">Suizo</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- TORNEO FINALIZADO -->
+  <div *ngIf="tournamentFinished" class="alert alert-success text-center my-4">
+    <h3>¡Torneo finalizado!</h3>
+    <div *ngIf="tournamentType === 'swiss'">
+      <mat-card class="mb-4">
+        <mat-card-header>
+          <mat-card-title>
+            <h4 class="mb-0">Clasificación final</h4>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="table table-striped w-100">
+            <thead>
+              <tr>
+                <th>Jugador</th>
+                <th>Puntos</th>
+                <th>Rivales</th>
+                <th>Bye</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of finalResults">
+                <td>{{ p.name }}</td>
+                <td>{{ p.points }}</td>
+                <td>{{ p.opponents.join(', ') }}</td>
+                <td>{{ p.hasBye ? 'Sí' : 'No' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div *ngIf="tournamentType === 'elimination'">
+      <mat-card class="mb-4">
+        <mat-card-header>
+          <mat-card-title>
+            <h4 class="mb-0">Clasificación final</h4>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="table table-striped w-100">
+            <thead>
+              <tr>
+                <th class="col-puesto">Puesto</th>
+                <th>Jugador</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let name of finalResults; let i = index">
+                <td class="col-puesto">{{ i + 1 }}</td>
+                <td>{{ name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <p class="mt-3 text-danger">Este torneo está finalizado y no se puede volver a jugar.</p>
+  </div>
+
+  <!-- EN JUEGO (ambos tipos) -->
+  <ng-container *ngIf="!tournamentFinished">
+    <button
+      *ngIf="tournamentType === 'elimination'"
+      mat-raised-button color="accent"
+      (click)="generateEliminationPairings()"
+      class="d-block mx-auto mb-4"
+    >
+      Generar emparejamientos eliminatorios
+    </button>
+    <button
+      *ngIf="tournamentType === 'swiss'"
+      mat-raised-button color="primary"
+      (click)="generateSwissPairings()"
+      class="d-block mx-auto mb-4"
+    >
+      Generar emparejamientos suizos
+    </button>
+
+    <div *ngIf="pairings.length > 0">
+      <h3 class="text-center mb-4" style="color: #607d8b;">
+        {{ tournamentType === 'elimination' ? 'Bracket eliminatorio' : 'Emparejamientos suizos' }} - Ronda {{ currentRoundNumber }}
+      </h3>
+      <div class="row">
+        <ng-container *ngFor="let p of pairings; let i = index">
+          <div class="col-md-6 mb-3">
+            <mat-card>
+              <mat-card-content>
+                <div class="chips-row">
+                  <mat-chip
+                    [color]="winners[i] === p[0] ? 'warn' : 'primary'"
+                    selected
+                    matChipClickable
+                    (click)="setWinner(i, p[0])"
+                    [disabled]="!!winners[i]"
+                    style="cursor:pointer;"
+                  >
+                    <ng-container *ngIf="winners[i] === p[0]; else normal0">
+                      Ganador: {{ p[0] }}
+                    </ng-container>
+                    <ng-template #normal0>
+                      {{ p[0] }}
+                    </ng-template>
+                  </mat-chip>
+                  <span class="vs-text">vs</span>
+                  <mat-chip
+                    [color]="winners[i] === p[1] ? 'warn' : 'accent'"
+                    selected
+                    matChipClickable
+                    (click)="setWinner(i, p[1])"
+                    [disabled]="!p[1] || p[1]==='BYE' || !!winners[i]"
+                    style="cursor:pointer;"
+                  >
+                    <ng-container *ngIf="winners[i] === p[1]; else normal1">
+                      Ganador: {{ p[1] || 'BYE' }}
+                    </ng-container>
+                    <ng-template #normal1>
+                      {{ p[1] || 'BYE' }}
+                    </ng-template>
+                  </mat-chip>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </ng-container>
+      </div>
+      <div class="text-center mt-4">
+        <button
+          *ngIf="tournamentType === 'elimination'"
+          mat-raised-button color="primary"
+          (click)="nextRound()"
+          [disabled]="countWinners() !== pairings.length"
+        >
+          Siguiente ronda
+        </button>
+        <button
+          *ngIf="tournamentType === 'swiss'"
+          mat-raised-button color="primary"
+          (click)="finishSwissRound()"
+          [disabled]="countWinners() !== pairings.length"
+        >
+          Siguiente ronda
+        </button>
+      </div>
+
+      <!-- Clasificación provisional -->
+      <mat-card class="mt-4">
+        <mat-card-header>
+          <mat-card-title>
+            <h4 class="mb-0">
+              Clasificación provisional
+            </h4>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <table class="table table-striped w-100">
+            <thead>
+              <tr *ngIf="tournamentType === 'elimination'">
+                <th class="col-puesto">Puesto</th>
+                <th>Jugador</th>
+              </tr>
+              <tr *ngIf="tournamentType === 'swiss'">
+                <th>Jugador</th>
+                <th>Puntos</th>
+                <th>Rivales</th>
+                <th>Bye</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="tournamentType === 'elimination'">
+                <tr *ngFor="let name of eliminationProvisionalRanking; let i = index">
+                  <td class="col-puesto">{{ i + 1 }}</td>
+                  <td>{{ name }}</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="tournamentType === 'swiss'">
+                <tr *ngFor="let p of swissRanking">
+                  <td>{{ p.name }}</td>
+                  <td>{{ p.points }}</td>
+                  <td>{{ p.opponents.join(', ') }}</td>
+                  <td>{{ p.hasBye ? 'Sí' : 'No' }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-container>
+</div>
