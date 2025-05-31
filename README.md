@@ -11,7 +11,6 @@
   npm install -g @angular/cli
   ```
 - PostgreSQL instalado y funcionando en local
----
 
 ### Instalación y configuración de la base de datos
 
@@ -20,9 +19,6 @@
    ```bash
    psql -U TU_USUARIO -d NOMBRE_DE_TU_DB -f ruta/al/backup.sql
    ```
-   
----
-
 
 ### Backend (Node.js + Express)
 
@@ -50,8 +46,6 @@
    ```
 6. El backend estará disponible en `http://localhost:5000`
 
----
-
 ### Frontend (Angular)
 
 1. Entra en la carpeta del frontend:
@@ -71,5 +65,3 @@
    ng serve
    ```
 5. El frontend estará disponible en `http://localhost:4200`
-
----
