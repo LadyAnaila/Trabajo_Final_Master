@@ -1,8 +1,8 @@
 # Trabajo Final de Máster
 
-# Manual de instalación y despliegue
+## Manual de instalación y despliegue
 
-## Requisitos previos
+### Requisitos previos
 
 - [Node.js](https://nodejs.org/) (v18 o superior)
 - npm (gestor de paquetes de Node.js)
@@ -13,7 +13,7 @@
 - PostgreSQL instalado y funcionando en local
 ---
 
-## Instalación y configuración de la base de datos
+### Instalación y configuración de la base de datos
 
 1. Crea una base de datos vacía en PostgreSQL.
 2. Restaura tu backup ejecutando:
@@ -24,7 +24,7 @@
 ---
 
 
-## Backend (Node.js + Express)
+### Backend (Node.js + Express)
 
 1. Clona el repositorio o descarga el código fuente.
 2. Entra en la carpeta del backend:
@@ -52,7 +52,7 @@
 
 ---
 
-## Frontend (Angular)
+### Frontend (Angular)
 
 1. Entra en la carpeta del frontend:
    ```bash
